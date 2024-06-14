@@ -9,7 +9,7 @@ const MenuItem = (props: React.PropsWithChildren<MenuItemProps>) => {
   };
 
   return (
-    <div className="d-flex justify-content-between my-2 shadow rounded-4 border w-100">
+    <div className="d-flex justify-content-between my-2 shadow-sm rounded-4 border w-100">
       <div className="d-flex" style={{ width: "calc(100% - 100px)" }}>
         <div className="me-2 d-flex align-items-center justify-content-center p-2" style={{ width: "150px" }}>
           <img src={props.item.imageUrl} width={"130px"} alt="Pizza" />
