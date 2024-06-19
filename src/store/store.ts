@@ -1,10 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { orderReducer } from "./OrderSlice";
+import { menuReducer } from "./MenuSlice";
+import { cartReducer } from "./CartSlice";
+import { enableMapSet } from 'immer';
 
-// one reducer
+enableMapSet();
+
 const store = configureStore({
     reducer: {
-        order: orderReducer
+        order: orderReducer,
+        menu: menuReducer,
+        cart: cartReducer
     }
 });
 
