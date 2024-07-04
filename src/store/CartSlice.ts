@@ -22,7 +22,7 @@ const CartSlice = createSlice({
             const newState = { ...state };
             const existingItem = newState.items.get(item.id);
             if (existingItem)
-                existingItem.count += 1;
+                newState.items.set(item.id, new CartItem(item, existingItem.count + 1));
             else
                 newState.items.set(item.id, new CartItem(item, 1));
             newState.itemCount += 1;
@@ -35,9 +35,9 @@ const CartSlice = createSlice({
             const item: MenuItem = action.payload;
             const newState = { ...state };
             const existingItem = newState.items.get(item.id);
-            if (existingItem) {
+            if (existingItem && existingItem.count > 0) {
                 if (existingItem.count > 1)
-                    existingItem.count -= 1;
+                    newState.items.set(item.id, new CartItem(item, existingItem.count - 1));
                 else
                     newState.items.delete(item.id);
 

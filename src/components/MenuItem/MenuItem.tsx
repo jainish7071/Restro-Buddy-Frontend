@@ -61,10 +61,18 @@ const MenuItem = (props: React.PropsWithChildren<MenuItemProps>) => {
           )}
         </div>
         <div className="mt-2" style={{ fontSize: "12px" }}>
-          <b>Price</b> : ${price}
+          <b>Price</b> :
+          {discount && discount > 0 ? (
+            <span className="ms-1">
+              <s>${price}</s> ${price - price / discount}
+              <span style={{ fontSize: "10px", marginLeft: "2px" }}>{discount}% Off</span>
+            </span>
+          ) : (
+            <span className="ms-1">${price}</span>
+          )}
         </div>
         <div className="mt-2" style={{ fontSize: "12px" }}>
-          <b>Time</b> : {timeToPrepare} Min
+          <b>Estimated Time</b> : {timeToPrepare} Min
         </div>
       </div>
     </div>

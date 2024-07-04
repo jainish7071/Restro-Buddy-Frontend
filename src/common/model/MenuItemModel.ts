@@ -10,6 +10,7 @@ export interface MenuItem {
     timeToPrepare?: number
     mostOrdered?: boolean
     itemType?: ItemType
+    active?: boolean
 }
 export enum ItemType {
     VEG,

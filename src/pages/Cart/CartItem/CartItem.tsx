@@ -1,11 +1,79 @@
 import React from "react";
 import { CartItemProps } from "./CartItem.types";
-import MenuItem from "../../../components/MenuItem/MenuItem";
+import { Button } from "antd";
+import { DeleteFilled, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { addItem, removeItem } from "../../../store/CartSlice";
 
 const CartItem = (props: React.PropsWithChildren<CartItemProps>) => {
+  const { name, description, recommended, mostOrdered, price, timeToPrepare, discount } = props.item;
+  const count = props.count;
+  const dispatch = useDispatch();
+  const countChangeHandler = (action: "add" | "remove") => {
+    if (action === "add") {
+      dispatch(addItem(props.item));
+    } else {
+      dispatch(removeItem(props.item));
+    }
+  };
+
   return (
-    <div>
-      <MenuItem count={props.count} item={props.item} key={props.item.id} />
+    <div className="d-flex justify-content-between my-2 shadow-sm rounded-4 border w-100">
+      <div className="d-flex" style={{ width: "calc(100% - 100px)" }}>
+        <div className="me-2 d-flex align-items-center justify-content-center p-2" style={{ width: "150px" }}>
+          <img src={"/pizza.png"} width={"130px"} alt="Pizza" />
+        </div>
+        <div className="d-flex flex-column position-relative" style={{ width: "calc(100% - 150px)" }}>
+          <div className="fw-bolder fs-5 w-100">
+            <span>{name}</span>
+          </div>
+          <div className="w-100 d-flex">{description}</div>
+          <div className="position-absolute d-flex end-0" style={{ top: "5px", fontSize: "12px" }}>
+            {recommended && (
+              <span className="px-2 me-2 rounded-pill bg-success-subtle d-flex align-items-center">
+                <span className="me-1 text-success fw-bolder">&bull;</span>
+                <span>recommended</span>
+              </span>
+            )}
+            {mostOrdered && (
+              <span className="px-2 me-2 rounded-pill bg-success-subtle d-flex align-items-center">
+                <span className="me-1 text-danger fw-bolder">&bull;</span>
+                <span>most ordered</span>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="p-2 px-3" style={{ width: "150px" }}>
+        <div className="d-flex justify-content-evenly">
+          {count > 0 ? (
+            <div className="w-100 d-flex justify-content-between">
+              {count > 1 && <Button size="small" type="primary" icon={<MinusOutlined />} onClick={() => countChangeHandler("remove")} iconPosition="end" />}
+              {count === 1 && <Button size="small" type="primary" icon={<DeleteFilled />} onClick={() => countChangeHandler("remove")} iconPosition="end" />}
+              <span className="px-2 text-center"> {count} </span>
+              <Button size="small" type="primary" icon={<PlusOutlined />} onClick={() => countChangeHandler("add")} iconPosition="end" />
+            </div>
+          ) : (
+            <Button type="primary" className="w-100" icon={<PlusOutlined />} onClick={() => countChangeHandler("add")} size="small" iconPosition="end">
+              Try it
+            </Button>
+          )}
+        </div>
+        <div className="mt-2" style={{ fontSize: "12px" }}>
+          <b>Price</b> :
+          {discount && discount > 0 ? (
+            <span className="ms-1">
+              <s>${price * count}</s> ${(price - price / discount) * count}
+              <span style={{ fontSize: "10px", marginLeft: "2px" }}>{discount}% Off</span>
+            </span>
+          ) : (
+            <span className="ms-1">${price * count}</span>
+          )}
+        </div>
+        <div className="mt-2" style={{ fontSize: "12px" }}>
+          <b>Time</b> : {timeToPrepare} Min
+        </div>
+      </div>
     </div>
   );
 };
