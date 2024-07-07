@@ -5,15 +5,29 @@ import { CartItem as CartItemType } from "../../common/model/CartModel";
 import { Button } from "antd";
 import { RootContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import { OrderType } from "../../common/model/OrderModel";
 
 const Cart = () => {
   const cartItems: Map<number, CartItemType> = useSelector((state: any) => state.cart.items);
   const items = useMemo(() => Array.from(cartItems.values()), [cartItems]);
+  const totalPrice = useSelector((state: any) => state.cart.totalPrice);
   const rootContext = useContext(RootContext);
   const navigate = useNavigate();
 
   const placeOrder = (e: any) => {
     // Place Order
+    const orderJSON = {
+      tableId: 1,
+      paymentId: "fadjfkd-fasd-asdfasd-fasd",
+      orderTime: Date.now(),
+      estimatedTime: "",
+      deliveredTime: null,
+      totalPrice: totalPrice,
+      discountedPrice: 100,
+      orderStatus: OrderType.PENDING,
+      items: items,
+    };
+    console.log(orderJSON);
     rootContext.openNotificationWithIcon("success", "Order Placed Successfully", "Seat Back and Relax! Your Order is In Progress!");
     navigate("/order/" + 1);
   };

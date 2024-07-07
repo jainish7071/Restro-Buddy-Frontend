@@ -1,0 +1,80 @@
+/* Bootstrap container override */
+.container {
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 10px;
+}
+
+/* Card customization */
+.order-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  background-color: #fff;
+}
+
+/* Title styling */
+.order-title {
+  color: #8b0000;
+  font-weight: bold;
+}
+
+/* Item name styling */
+.item-name {
+  color: #8b0000;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* Discounted price styling */
+.discounted-price {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Responsive text alignment */
+.text-right {
+  text-align: right;
+
+  @media (max-width: 768px) {
+    text-align: left !important;
+  }
+}
+
+/* Image styling */
+.item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
+}
+
+/* List item customization */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.item-info {
+  flex-grow: 1;
+  padding-left: 16px;
+}
+
+.item-count,
+.item-price {
+  text-align: right;
+}
