@@ -3,11 +3,10 @@ import { MenuProps } from "./Menu.types";
 import MenuItem from "../../components/MenuItem/MenuItem";
 import { Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { BaseService } from "../../Services/BaseService";
-import { API_CONSTANT } from "../../common/constants/ApiConstants";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../../store/MenuSlice";
+import { MenuService } from "../../Services/MenuService";
 
 const Menu = (props: React.PropsWithChildren<MenuProps>) => {
   const count = useSelector((state: any) => state.cart.itemCount);
@@ -20,8 +19,12 @@ const Menu = (props: React.PropsWithChildren<MenuProps>) => {
   }, []);
 
   const fetchData = async () => {
-    const data = await BaseService.sendGetRequest(API_CONSTANT.FETCH_MENU);
-    dispatch(setItems(data));
+    try {
+      const data = await MenuService.fetchMenu();
+      dispatch(setItems(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

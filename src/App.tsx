@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { notification } from "antd";
 import OrderView from "./pages/OrderView/OrderView";
+import LoginPage from "./pages/Login/LoginPage";
+import SignUpPage from "./pages/SignUp/SignUpPage";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 export const RootContext = createContext({ openNotificationWithIcon: (type: NotificationType, title: String, message: String) => {} });
@@ -36,6 +38,8 @@ const App = () => {
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/order/:orderId" element={<OrderView />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>
             </Routes>

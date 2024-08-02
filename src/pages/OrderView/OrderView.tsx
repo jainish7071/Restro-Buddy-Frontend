@@ -1,89 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { OrderViewProps } from "./OrderView.types";
 import { OrderModel, OrderType } from "../../common/model/OrderModel";
-import { ItemType } from "../../common/model/MenuItemModel";
 import { Card, Col, List, Row, Tag } from "antd";
 import styles from "./OrderView.module.scss";
-import { BaseService } from "../../Services/BaseService";
-import { API_CONSTANT } from "../../common/constants/ApiConstants";
+import { OrderService } from "../../Services/OrderService";
 
 const OrderView = (props: React.PropsWithChildren<OrderViewProps>) => {
-  const dummyOrder: OrderModel = {
-    id: 1,
-    tableId: "9",
-    paymentId: "paykefakjefjhasd",
-    orderTime: new Date("06-12-2024"),
-    estimatedTime: 12,
-    deliveredTime: new Date(),
-    totalPrice: 400,
-    discountedPrice: 340,
-    orderStatus: OrderType.DELIVERED,
-    items: [
-      {
-        id: 1,
-        item: {
-          id: 2,
-          name: "Burger",
-          description: "Description 2",
-          price: 20,
-          discount: 10,
-          imageUrl: "image_url",
-          timeToPrepare: 10,
-          itemType: ItemType.CONTAINS_EGG,
-          active: true,
-          available: true,
-          recommended: false,
-        },
-        count: 2,
-      },
-      {
-        id: 2,
-        item: {
-          id: 3,
-          name: "Pizza",
-          description: "Description 1",
-          price: 15,
-          discount: 0,
-          imageUrl: "image_url_pizza",
-          timeToPrepare: 15,
-          itemType: ItemType.NON_VEG,
-          active: true,
-          available: true,
-          recommended: true,
-        },
-        count: 3,
-      },
-      {
-        id: 3,
-        item: {
-          id: 4,
-          name: "Sandwich",
-          description: "Description 3",
-          price: 10,
-          discount: 0,
-          imageUrl: "image_url_sandwich",
-          timeToPrepare: 8,
-          itemType: ItemType.VEG,
-          active: true,
-          available: false,
-          recommended: false,
-        },
-        count: 1,
-      },
-    ],
-  };
-
   useEffect(() => {
     fetchOrder();
     //eslint-disable-next-line
   }, []);
 
   const fetchOrder = async () => {
-    const order = await BaseService.sendGetRequest(API_CONSTANT.FETCH_ORDER + "/3");
+    const order = await OrderService.fetchOrder(3);
     setOrder(order);
   };
 
-  const [order, setOrder] = useState<OrderModel>(dummyOrder);
+  const [order, setOrder] = useState<OrderModel>();
 
   const getStatus = (orderStatus: OrderType) => {
     switch (orderStatus) {
